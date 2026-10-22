@@ -1,7 +1,11 @@
+#Ignore all local data files
+data/
+
+#Python virtual environment
 .venv/
+venv/
+#Python cache 
 __pycache__/
-*.py[cod]
-data/raw/
-data/processed/
+
+#Ignore Jupyter Notebook checkpoints
 .ipynb_checkpoints/
-.DS_Store
