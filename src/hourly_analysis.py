@@ -45,6 +45,24 @@ hourly_demand = (
     .size()
     .reset_index(name="trip_count")
 )
+# Include every hour for every date, even when there are zero trips
+all_dates = pd.date_range(
+    start=df["date"].min(),
+    end=df["date"].max(),
+    freq="D"
+).date
+
+all_hours = pd.MultiIndex.from_product(
+    [all_dates, range(24)],
+    names=["date", "hour"]
+)
+
+hourly_demand = (
+    hourly_demand
+    .set_index(["date", "hour"])
+    .reindex(all_hours, fill_value=0)
+    .reset_index()
+)
 
 # Save the hourly results
 output_file = output_folder / "hourly_demand.csv"
